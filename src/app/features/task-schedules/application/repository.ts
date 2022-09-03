@@ -172,14 +172,14 @@ function buildEvent(event: EventDTO): Event {
   };
 }
 
-function getTalks(eventId: Event['id']) {
-  const event = getEvents().find((event) => event.id === eventId);
+async function getTalks(eventId: Event['id']): Promise<Talk[]> {
+  const event = (await getEvents()).find((event) => event.id === eventId);
   if (!event) {
     throw new Error('Event not found');
   }
-  return event.talks;
+  return Promise.resolve(event.talks);
 }
 
-function getEvents() {
-  return events.map(buildEvent);
+function getEvents(): Promise<Event[]> {
+  return Promise.resolve(events.map(buildEvent));
 }

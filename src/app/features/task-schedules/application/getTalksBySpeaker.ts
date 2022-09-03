@@ -2,11 +2,11 @@ import { Event } from '../domain/event';
 import { Talk } from '../domain/talks';
 import { repository } from './repository';
 
-export const getTalkBySpeaker = (
+export const getTalksBySpeaker = async (
   eventId: Event['id'],
-  topic: Talk['topic']
+  speaker: Talk['speaker']
 ): Promise<Talk[]> => {
-  return Promise.resolve(
-    repository.getTalks(eventId).filter((talk) => talk.topic === topic)
+  return (await repository.getTalks(eventId)).filter(
+    (talk) => talk.speaker === speaker
   );
 };
