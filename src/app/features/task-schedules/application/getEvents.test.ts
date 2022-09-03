@@ -1,8 +1,8 @@
 import { aEventBuilder } from '../domain/aEventBuilder';
-import { repository } from './repository';
+import { repository } from '../domain/repository';
 import { getEvents } from './getEvents';
 
-jest.mock('./repository');
+jest.mock('../domain/repository');
 
 describe('getEvents', () => {
   it('should return the events', async () => {

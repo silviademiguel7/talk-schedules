@@ -1,8 +1,8 @@
 import { aTalkBuilder, withTopic } from '../domain/aTalkBuilder';
+import { repository } from '../domain/repository';
 import { getTalksByTopic } from './getTalksByTopic';
-import { repository } from './repository';
 
-jest.mock('./repository');
+jest.mock('../domain/repository');
 
 describe('getTalksByTopic', () => {
   it('should return the talks of an event with a topic ', async () => {

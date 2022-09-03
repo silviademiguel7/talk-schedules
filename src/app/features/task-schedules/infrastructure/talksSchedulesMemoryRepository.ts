@@ -1,7 +1,11 @@
 import { Event } from '../domain/event';
+import { Repository } from '../domain/repository';
 import { Talk } from '../domain/talks';
 
-export const repository = { getTalks, getEvents };
+export const talksSchedulesMemoryRepository: Repository = {
+  getTalks,
+  getEvents,
+};
 
 interface TalkDTO {
   id: string;

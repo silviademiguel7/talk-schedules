@@ -1,8 +1,8 @@
 import { aTalkBuilder, withSpeaker } from '../domain/aTalkBuilder';
+import { repository } from '../domain/repository';
 import { getTalksBySpeaker } from './getTalksBySpeaker';
-import { repository } from './repository';
 
-jest.mock('./repository');
+jest.mock('../domain/repository');
 
 describe('getTalksBySpeaker', () => {
   it('should return the talk of an event given by a teacher ', async () => {
