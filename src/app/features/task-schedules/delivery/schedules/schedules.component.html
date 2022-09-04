@@ -1,1 +1,52 @@
-<p>schedules works!</p>
+<header class="title">
+  <h1>Estas son las charlas <br />de <br />{{ event.name }}</h1>
+</header>
+
+<main class="container">
+  <h2 class="subtitle">Busca tu charla:</h2>
+  <div class="container_filter">
+    <div class="filter_input">
+      <label for="speaker">
+        Profesor
+        <select name="select" id="speaker" (change)="onChangeSpeaker($event)">
+          <option value="todos">Todos</option>
+          <option *ngFor="let speaker of speakers" value="{{ speaker }}">
+            {{ speaker }}
+          </option>
+        </select>
+      </label>
+    </div>
+    <div class="filter_input">
+      <label for="topic">
+        Temática
+        <select name="select" id="topic" (change)="onChangeTopic($event)">
+          <option value="todos">Todos</option>
+          <option *ngFor="let topic of topics" value="{{ topic }}">
+            {{ topic }}
+          </option>
+        </select>
+      </label>
+    </div>
+  </div>
+
+  <div class="container_list">
+    <h3 class="list_title-day">
+      Dia {{ event.date.getDate() }} de {{ this.getMonth(event.date) }} de
+      {{ event.date.getFullYear() }}
+    </h3>
+    <div class="list_item" *ngFor="let room of rooms">
+      <h2 class="list_title">Sala: {{ room }}</h2>
+
+      <ul>
+        <li *ngFor="let talk of getTalksByRoom(room)">
+          <strong>{{ this.getHours(talk.startDate) }}</strong
+          ><b> - </b><strong>{{ this.getHours(talk.endDate) }}</strong>
+          <b> - </b>
+          <span>{{ talk.title }}</span> <b> - </b>
+          <em>{{ talk.speaker }}</em> (<span>{{ talk.topic }}</span
+          >)
+        </li>
+      </ul>
+    </div>
+  </div>
+</main>

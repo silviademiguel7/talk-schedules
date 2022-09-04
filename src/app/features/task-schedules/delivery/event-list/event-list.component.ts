@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { getEvents } from '../../application/getEvents';
+import { Event } from '../../domain/event';
 
 @Component({
   selector: 'app-event-list',
@@ -6,6 +8,33 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./event-list.component.css'],
 })
 export class EventListComponent implements OnInit {
+  public events: Event[] = [];
   constructor() {}
-  ngOnInit(): void {}
+
+  ngOnInit(): void {
+    this.onLoad();
+  }
+
+  async onLoad() {
+    this.events = await getEvents();
+  }
+
+  getMonth(date: Date) {
+    const monthNames = [
+      'Enero',
+      'Febrero',
+      'Marzo',
+      'Abril',
+      'Mayo',
+      'Junio',
+      'July',
+      'Agosto',
+      'Septiembre',
+      'Octubre',
+      'Noviembre',
+      'Diciembre',
+    ];
+
+    return monthNames[date.getMonth()];
+  }
 }
