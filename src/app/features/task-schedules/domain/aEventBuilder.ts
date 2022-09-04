@@ -5,6 +5,7 @@ export const aEventBuilder = (...options: Partial<Event>[]) => {
     id: 'irrelevantId',
     name: 'irrelevantName',
     date: new Date('2000-01-01'),
+    description: 'irrelevantDescription',
     talks: [],
   };
 
@@ -21,6 +22,10 @@ export function withName(name: Event['name']) {
 
 export function withDate(date: Event['date']) {
   return { date };
+}
+
+export function withDescription(description: Event['description']) {
+  return { description };
 }
 
 export function withTalks(talks: Event['talks']) {
