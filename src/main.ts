@@ -10,9 +10,8 @@ if (environment.production) {
   enableProdMode();
 }
 
+repository.init(talksSchedulesMemoryRepository);
+
 platformBrowserDynamic()
   .bootstrapModule(AppModule)
-  .then(() => {
-    repository.init(talksSchedulesMemoryRepository);
-  })
   .catch((err) => console.error(err));

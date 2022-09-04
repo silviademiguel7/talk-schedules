@@ -21,15 +21,16 @@ interface EventDTO {
   id: string;
   name: string;
   date: string;
+  description: string;
   talks: TalkDTO[];
 }
 
-const firstTalk: TalkDTO[] = [
+const event1Talks: TalkDTO[] = [
   {
     id: '1',
     title: 'Introduction',
-    startDate: '2022/11/14 9:00:00',
-    endDate: '2022/11/14 10:00:00',
+    startDate: '2022/11/14 19:00:00',
+    endDate: '2022/11/14 20:00:00',
     room: 'Sala 1',
     speaker: 'David Fernandez Garcia',
     topic: 'General',
@@ -82,7 +83,7 @@ const firstTalk: TalkDTO[] = [
   },
 ];
 
-const secondeTalk: TalkDTO[] = [
+const event2Talks: TalkDTO[] = [
   {
     id: '7',
     title: 'Introduction',
@@ -145,13 +146,17 @@ const events: EventDTO[] = [
     id: 'event1',
     name: 'Pamplona Software Crafters',
     date: '2022/11/14',
-    talks: firstTalk,
+    description:
+      'El encuentro sobre desarrollo de software para aquellas personas que buscan compartir sus experiencias y mejorar [sus habilidades] como profesionales',
+    talks: event1Talks,
   },
   {
     id: 'event2',
-    name: 'Wecode Fest',
+    name: 'WecodeFest',
     date: '2022/11/15',
-    talks: secondeTalk,
+    description:
+      '¿Quieres un evento lleno de código, katas, talleres, charlas de patrones, arquitectura, tecnología...?',
+    talks: event2Talks,
   },
 ];
 
@@ -172,6 +177,7 @@ function buildEvent(event: EventDTO): Event {
     id: event.id,
     name: event.name,
     date: new Date(event.date),
+    description: event.description,
     talks: event.talks.map(buildTalk),
   };
 }
