@@ -66,3 +66,68 @@
 .list_item {
   margin-bottom: var(--space-small);
 }
+
+.container_table {
+  width: 100%;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+
+  border-spacing: 0px;
+  border: 1px solid var(--primary-color);
+}
+
+td {
+  text-align: left;
+  border: 1px solid var(--primary-color);
+}
+
+td.zone {
+  background-color: #e0e0e0;
+  padding: var(--space-small);
+  text-align: center;
+}
+
+th {
+  background-color: #e0e0e0;
+  border: 1px solid var(--primary-color);
+}
+
+.talkColumn {
+  border-bottom: 1px solid var(--primary-color);
+  overflow: hidden;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.talk-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.container_talkColumn {
+  height: 300px;
+}
+
+.talkColumn:first-child {
+  border-top: none;
+}
+
+.height-100 {
+  height: 100%;
+}
+
+.height-50 {
+  height: 50%;
+}
+
+.height-25 {
+  height: 25%;
+}

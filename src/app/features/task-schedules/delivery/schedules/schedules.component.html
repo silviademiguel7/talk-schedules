@@ -68,4 +68,39 @@
       </ul>
     </div>
   </div>
+
+  <div class="container_table" *ngIf="activeOtpionView == 'tableMode'">
+    <table>
+      <thead>
+        <tr>
+          <th>Hora</th>
+          <th *ngFor="let room of rooms">{{ room }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let zone of timeZone">
+          <td class="zone">
+            {{ padTo2Digits(zone.startDate) }}:00 -
+            {{ padTo2Digits(zone.startDate + zone.duration) }}:00
+          </td>
+          <td *ngFor="let room of rooms">
+            <div class="container_talkColumn">
+              <div
+                *ngFor="let talk of getTalk(zone, room)"
+                class="talkColumn height-{{ getHeightTalk(zone, talk) }}"
+              >
+                <div class="talk-info">
+                  <div>
+                    {{ talk.title }}
+                  </div>
+                  <div>{{ talk.speaker }}</div>
+                  <div>{{ talk.topic }}</div>
+                </div>
+              </div>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </main>

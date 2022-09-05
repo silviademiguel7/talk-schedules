@@ -1,7 +1,6 @@
 .wrapper {
   margin: auto;
   padding: 0px var(--space-large);
-  height: 100vh;
   background-color: var(--primary-color);
 }
 

@@ -27,9 +27,16 @@ export class SchedulesComponent implements OnInit {
   public speakers: Talk['speaker'][] = [];
   public topics: Talk['topic'][] = [];
   public filters: any = [];
-  public activeOtpionView: OptionView = 'listMode';
+  public activeOtpionView: OptionView = 'tableMode';
+  public timeZone = [
+    { startDate: 9, duration: 1 },
+    { startDate: 10, duration: 1 },
+    { startDate: 11, duration: 1 },
+    { startDate: 12, duration: 1 },
+  ];
 
   constructor(private route: ActivatedRoute) {}
+
   ngOnInit(): void {
     this.onLoad();
   }
@@ -44,6 +51,7 @@ export class SchedulesComponent implements OnInit {
     this.rooms = talksRooms(this.talks);
     this.speakers = talksSpeakers(this.talks);
     this.topics = topicsTalks(this.talks);
+    this.timeZone;
   }
 
   public getTalksByRoom(room: Talk['room']): Talk[] {
@@ -53,11 +61,13 @@ export class SchedulesComponent implements OnInit {
     );
   }
 
-  public getHours(date: Date): string {
-    const padTo2Digits = (num: number) => String(num).padStart(2, '0');
+  public padTo2Digits = (num: number) => String(num).padStart(2, '0');
 
+  public getHours(date: Date): string {
     return (
-      padTo2Digits(date.getHours()) + ':' + padTo2Digits(date.getMinutes())
+      this.padTo2Digits(date.getHours()) +
+      ':' +
+      this.padTo2Digits(date.getMinutes())
     );
   }
 
@@ -143,5 +153,58 @@ export class SchedulesComponent implements OnInit {
 
   isOptionViewActive(option: OptionView): boolean {
     return this.activeOtpionView === option;
+  }
+
+  getTalk(zone: { startDate: number; duration: number }, room: Talk['room']) {
+    return (
+      this.talks
+        .filter((talk) => {
+          return this.isTalkInInterval(zone, talk) && talk.room === room;
+        })
+        .sort(
+          (talkA, talkB) => Number(talkA.startDate) - Number(talkB.startDate)
+        ) || { title: '', speaker: '', topic: '' }
+    );
+  }
+
+  isTalkInInterval(zone: { startDate: number; duration: number }, talk: Talk) {
+    const endZoneDate = new Date(this.event.date.getDate());
+    endZoneDate.setHours(zone.startDate + zone.duration);
+    const startZoneDate = new Date(this.event.date.getDate());
+    startZoneDate.setHours(zone.startDate);
+
+    const { startDate, endDate } = talk;
+
+    const talkEndDecimalHours = endDate.getHours() + endDate.getMinutes() / 60;
+    const talkStartInHours = startDate.getHours() + startDate.getMinutes() / 60;
+    const zoneEndDecimalHours =
+      endZoneDate.getHours() + endZoneDate.getMinutes() / 60;
+    const zoneStartDecimalHours =
+      startZoneDate.getHours() + startZoneDate.getMinutes() / 60;
+
+    return (
+      talkEndDecimalHours > zoneStartDecimalHours &&
+      talkStartInHours < zoneEndDecimalHours
+    );
+  }
+
+  getHeightTalk(zone: { startDate: number; duration: number }, talk: Talk) {
+    if (
+      talk.endDate.getHours() + talk.endDate.getMinutes() / 60 >
+      zone.startDate + zone.duration
+    ) {
+      return '100';
+    }
+    const startDate1 =
+      talk.startDate.getHours() + talk.startDate.getMinutes() / 60 >
+      zone.startDate
+        ? talk.startDate.getHours() + talk.startDate.getMinutes() / 60
+        : zone.startDate;
+    const duration =
+      talk.endDate.getHours() + talk.endDate.getMinutes() / 60 - startDate1;
+
+    const height = 100 * duration;
+
+    return height.toString();
   }
 }
