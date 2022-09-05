@@ -29,7 +29,26 @@
     </div>
   </div>
 
-  <div class="container_list">
+  <div class="container_option-views">
+    <div
+      [ngClass]="{ active: isOptionViewActive('listMode') }"
+      class="option-views_item"
+      id="listMode"
+      (click)="onChangeViewOption($event)"
+    >
+      Lista de charlas
+    </div>
+    <div
+      [ngClass]="{ active: isOptionViewActive('tableMode') }"
+      class="option-views_item"
+      id="tableMode"
+      (click)="onChangeViewOption($event)"
+    >
+      Tabla de charlas
+    </div>
+  </div>
+
+  <div class="container_list" *ngIf="activeOtpionView == 'listMode'">
     <h3 class="list_title-day">
       Dia {{ event.date.getDate() }} de {{ this.getMonth(event.date) }} de
       {{ event.date.getFullYear() }}

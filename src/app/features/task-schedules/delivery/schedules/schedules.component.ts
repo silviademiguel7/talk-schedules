@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { getEventById } from '../../application/getEventById';
 
@@ -13,6 +13,8 @@ import {
   topicsTalks,
 } from '../../domain/talks';
 
+type OptionView = 'listMode' | 'tableMode';
+
 @Component({
   selector: 'app-schedules',
   templateUrl: './schedules.component.html',
@@ -25,6 +27,7 @@ export class SchedulesComponent implements OnInit {
   public speakers: Talk['speaker'][] = [];
   public topics: Talk['topic'][] = [];
   public filters: any = [];
+  public activeOtpionView: OptionView = 'listMode';
 
   constructor(private route: ActivatedRoute) {}
   ngOnInit(): void {
@@ -131,5 +134,14 @@ export class SchedulesComponent implements OnInit {
   async resetFilter() {
     this.talks = await getTalks(this.event.id);
     this.rooms = talksRooms(this.talks);
+  }
+
+  onChangeViewOption(event: any) {
+    const option = event.target.id;
+    this.activeOtpionView = option;
+  }
+
+  isOptionViewActive(option: OptionView): boolean {
+    return this.activeOtpionView === option;
   }
 }
