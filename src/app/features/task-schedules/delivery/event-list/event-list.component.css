@@ -1,12 +1,13 @@
 .title {
   text-align: center;
+  margin-bottom: var(--space-xlarge);
 }
 
 .subtitle {
   margin-bottom: 20px;
 }
 .container {
-  margin-top: 20px;
+  margin-top: var(--space-base);
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -14,45 +15,36 @@
 }
 
 .section-container {
-  padding: 20px;
+  padding: var(--space-base);
   background-color: white;
 }
 
 .single-event {
   display: flex;
-  margin: 20px 0px;
-  padding: 15px;
-  border-top: 2px solid rgb(242 242 235) !important;
+  margin: var(--space-base) 0px;
+  padding: var(--space-medium);
+  border-top: 2px solid rgb(242 242 235);
 }
 
 .info {
-  margin-left: 20px;
+  margin-left: var(--space-base);
 }
 
 .info_title {
   font-weight: bold;
-  margin-bottom: 15px;
+  margin-bottom: var(--space-medium);
 }
 
 /* First we style the container element.  */
 .calendar {
-  margin: 0.25em 10px 10px 0;
-  padding-top: 5px;
+  margin: 0.25em var(--space-small) var(--space-small) 0;
+  padding-top: var(--space-xsmall);
   float: left;
   width: 80px;
   background: #ededef;
-  background: -webkit-gradient(
-    linear,
-    left top,
-    left bottom,
-    from(#ededef),
-    to(#ccc)
-  );
-  background: -moz-linear-gradient(top, #ededef, #ccc);
   font: bold 30px/60px Arial Black, Arial, Helvetica, sans-serif;
   text-align: center;
-  color: #000;
-  text-shadow: #fff 0 1px 0;
+  color: var(--font-color);
   border-radius: 3px;
   position: relative;
   box-shadow: 0 2px 2px #888;
@@ -62,12 +54,11 @@
 .calendar em {
   display: block;
   font: normal bold 11px/30px Arial, Helvetica, sans-serif;
-  color: black;
-
+  color: var(--font-color);
   background: rgb(242, 242, 235);
   border-bottom-right-radius: 3px;
   border-bottom-left-radius: 3px;
-  border-top: 1px solid rgb(242, 242, 235);
+  border-top: 1px solid var(--primary-color);
 }
 
 /* Now I am styling the pseudo elements. Container’s pseudo elements (:before and :after) are used to create thos circles, "holes in te paper". */
@@ -101,14 +92,6 @@
   width: 4px;
   height: 14px;
   background: #dadada;
-  background: -webkit-gradient(
-    linear,
-    left top,
-    left bottom,
-    from(#f1f1f1),
-    to(#aaa)
-  );
-  background: -moz-linear-gradient(top, #f1f1f1, #aaa);
   z-index: 2;
   border-radius: 2px;
 }

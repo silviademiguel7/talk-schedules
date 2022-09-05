@@ -1,14 +1,15 @@
 .wrapper {
   margin: auto;
-  padding: 0px 40px;
+  padding: 0px var(--space-large);
   height: 100vh;
-  background-color: rgb(251, 247, 247);
+  background-color: var(--primary-color);
 }
 
 .content {
-  background-color: rgb(242, 242, 235);
+  background-color: white;
+  box-shadow: 0px 0px 10px 0px var(--shadow-color);
   height: 100%;
   max-width: 1140px;
   margin: auto;
-  padding: 40px;
+  padding: var(--space-large);
 }
