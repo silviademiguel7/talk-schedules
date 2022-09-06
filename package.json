@@ -10,7 +10,10 @@
     "test-watch": "jest --watch"
   },
   "jest": {
-    "preset": "jest-preset-angular"
+    "preset": "jest-preset-angular",
+    "setupFilesAfterEnv": [
+      "<rootDir>/setupJest.ts"
+    ]
   },
   "private": true,
   "dependencies": {
