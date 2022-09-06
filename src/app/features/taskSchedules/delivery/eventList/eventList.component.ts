@@ -4,8 +4,8 @@ import { Event } from '../../domain/event';
 
 @Component({
   selector: 'app-event-list',
-  templateUrl: './event-list.component.html',
-  styleUrls: ['./event-list.component.css'],
+  templateUrl: './eventList.component.html',
+  styleUrls: ['./eventList.component.css'],
 })
 export class EventListComponent implements OnInit {
   public events: Event[] = [];
