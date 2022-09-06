@@ -48,7 +48,7 @@ export class SchedulesComponent implements OnInit {
     duration: number
   ) {
     const intervalCollection = [];
-    for (let i = startHour; i <= endHour; i++) {
+    for (let i = startHour; i <= endHour; i = i + duration) {
       intervalCollection.push(this.createTimeZone(i, duration));
     }
     return intervalCollection;
@@ -65,7 +65,10 @@ export class SchedulesComponent implements OnInit {
 
   createDate(hour: number) {
     const dateCopy = new Date(this.event.date);
+    const hours = Math.floor(hour);
+    const minutes = Math.floor((hour - hours) * 60);
     dateCopy.setHours(hour);
+    dateCopy.setMinutes(minutes);
     return dateCopy;
   }
 
@@ -80,7 +83,7 @@ export class SchedulesComponent implements OnInit {
     this.tableRooms = talksRooms(this.talks);
     this.speakers = talksSpeakers(this.talks);
     this.topics = topicsTalks(this.talks);
-    this.timeZone = this.createIntervalCollection(9, 13, 1);
+    this.timeZone = this.createIntervalCollection(9, 13, 0.5);
   }
 
   getTalksByRoom(room: Talk['room']): Talk[] {
