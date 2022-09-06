@@ -48,12 +48,19 @@
     </div>
   </div>
 
-  <div class="container_list" *ngIf="activeOtpionView == 'listMode'">
+  <div class="container_list" *ngIf="talks.length === 0">
+    <h3 class="list_title-day">No existen resultado de búsqueda</h3>
+  </div>
+
+  <div
+    class="container_list"
+    *ngIf="activeOtpionView == 'listMode' && talks.length > 0"
+  >
     <h3 class="list_title-day">
       Dia {{ event.date.getDate() }} de {{ this.getMonth(event.date) }} de
       {{ event.date.getFullYear() }}
     </h3>
-    <div class="list_item" *ngFor="let room of rooms">
+    <div class="list_item" *ngFor="let room of tableRooms">
       <h2 class="list_title">Sala: {{ room }}</h2>
 
       <ul>
@@ -69,23 +76,28 @@
     </div>
   </div>
 
-  <div class="container_table" *ngIf="activeOtpionView == 'tableMode'">
+  <div
+    class="container_table"
+    *ngIf="activeOtpionView == 'tableMode' && talks.length > 0"
+  >
     <table>
       <thead>
         <tr>
           <th>Hora</th>
-          <th *ngFor="let room of rooms">{{ room }}</th>
+          <th *ngFor="let room of tableRooms">{{ room }}</th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let zone of timeZone">
           <td class="zone">
-            {{ padTo2Digits(zone.startDate.getHours()) }}:{{
-              padTo2Digits(zone.startDate.getMinutes())
-            }}
-            - {{ padTo2Digits(zone.endDate.getHours()) }}:{{
-              padTo2Digits(zone.endDate.getMinutes())
-            }}
+            <div class="zone-info">
+              {{ padTo2Digits(zone.startDate.getHours()) }}:{{
+                padTo2Digits(zone.startDate.getMinutes())
+              }}
+              - {{ padTo2Digits(zone.endDate.getHours()) }}:{{
+                padTo2Digits(zone.endDate.getMinutes())
+              }}
+            </div>
           </td>
           <td *ngFor="let room of rooms">
             <div class="container_talkColumn">
@@ -96,9 +108,7 @@
                 }} position-{{ getTopTranslationInPercentage(zone, talk) }}"
               >
                 <div class="talk-info">
-                  <div>
-                    <strong>{{ talk.title }}</strong>
-                  </div>
+                  <strong>{{ talk.title }}</strong>
                   <em>{{ talk.topic }}</em>
                   <div>{{ talk.speaker }}</div>
                 </div>

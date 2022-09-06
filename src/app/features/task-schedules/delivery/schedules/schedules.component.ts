@@ -29,6 +29,7 @@ export class SchedulesComponent implements OnInit {
   public talks: Talk[] = [];
   public event: Event = {} as Event;
   public rooms: Talk['room'][] = [];
+  public tableRooms: Talk['room'][] = [];
   public speakers: Talk['speaker'][] = [];
   public topics: Talk['topic'][] = [];
   public filters: Filter[] = [];
@@ -76,6 +77,7 @@ export class SchedulesComponent implements OnInit {
     this.talks = await getTalks(id);
     this.event = await getEventById(id);
     this.rooms = talksRooms(this.talks);
+    this.tableRooms = talksRooms(this.talks);
     this.speakers = talksSpeakers(this.talks);
     this.topics = topicsTalks(this.talks);
     this.timeZone = this.createIntervalCollection(9, 13, 1);
