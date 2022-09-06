@@ -80,21 +80,27 @@
       <tbody>
         <tr *ngFor="let zone of timeZone">
           <td class="zone">
-            {{ padTo2Digits(zone.startDate) }}:00 -
-            {{ padTo2Digits(zone.startDate + zone.duration) }}:00
+            {{ padTo2Digits(zone.startDate.getHours()) }}:{{
+              padTo2Digits(zone.startDate.getMinutes())
+            }}
+            - {{ padTo2Digits(zone.endDate.getHours()) }}:{{
+              padTo2Digits(zone.endDate.getMinutes())
+            }}
           </td>
           <td *ngFor="let room of rooms">
             <div class="container_talkColumn">
               <div
                 *ngFor="let talk of getTalk(zone, room)"
-                class="talkColumn height-{{ getHeightTalk(zone, talk) }}"
+                class="talkColumn height-{{
+                  getDurationTalkInSlotInPercentage(zone, talk)
+                }} position-{{ getTopTranslationInPercentage(zone, talk) }}"
               >
                 <div class="talk-info">
                   <div>
-                    {{ talk.title }}
+                    <strong>{{ talk.title }}</strong>
                   </div>
+                  <em>{{ talk.topic }}</em>
                   <div>{{ talk.speaker }}</div>
-                  <div>{{ talk.topic }}</div>
                 </div>
               </div>
             </div>

@@ -29,8 +29,8 @@ const event1Talks: TalkDTO[] = [
   {
     id: '1',
     title: 'Introduction',
-    startDate: '2022/11/14 09:00:00',
-    endDate: '2022/11/14 10:00:00',
+    startDate: '2022/11/14 09:30:00',
+    endDate: '2022/11/14 09:45:00',
     room: 'Sala 1',
     speaker: 'David Fernandez Garcia',
     topic: 'General',

@@ -2,14 +2,14 @@ import { Event } from '../domain/event';
 import { repository } from '../domain/repository';
 import { Talk } from '../domain/talks';
 
-interface filter {
+export interface Filter {
   name: 'speaker' | 'topic';
   value: Talk['speaker'] | Talk['topic'];
 }
 
 export const getTalksByFilters = async (
   eventId: Event['id'],
-  filters: filter[]
+  filters: Filter[]
 ) => {
   const talks = await repository.getTalks(eventId);
   let filteredTalks = talks;

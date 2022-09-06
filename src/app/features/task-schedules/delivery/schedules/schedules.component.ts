@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { getEventById } from '../../application/getEventById';
 
 import { getTalks } from '../../application/getTalks';
-import { getTalksByFilters } from '../../application/getTalksByFilters';
+import { Filter, getTalksByFilters } from '../../application/getTalksByFilters';
 import { Event } from '../../domain/event';
 import {
   Talk,
@@ -14,6 +14,11 @@ import {
 } from '../../domain/talks';
 
 type OptionView = 'listMode' | 'tableMode';
+
+interface Interval {
+  startDate: Date;
+  endDate: Date;
+}
 
 @Component({
   selector: 'app-schedules',
@@ -26,19 +31,41 @@ export class SchedulesComponent implements OnInit {
   public rooms: Talk['room'][] = [];
   public speakers: Talk['speaker'][] = [];
   public topics: Talk['topic'][] = [];
-  public filters: any = [];
+  public filters: Filter[] = [];
   public activeOtpionView: OptionView = 'tableMode';
-  public timeZone = [
-    { startDate: 9, duration: 1 },
-    { startDate: 10, duration: 1 },
-    { startDate: 11, duration: 1 },
-    { startDate: 12, duration: 1 },
-  ];
+  public timeZone: Interval[] = [];
 
   constructor(private route: ActivatedRoute) {}
 
   ngOnInit(): void {
     this.onLoad();
+  }
+
+  createIntervalCollection(
+    startHour: number,
+    endHour: number,
+    duration: number
+  ) {
+    const intervalCollection = [];
+    for (let i = startHour; i <= endHour; i++) {
+      intervalCollection.push(this.createTimeZone(i, duration));
+    }
+    return intervalCollection;
+  }
+
+  createTimeZone(hour: number, duration: number) {
+    const timeZone = {
+      startDate: this.createDate(hour),
+      endDate: this.createDate(hour + duration),
+    };
+
+    return timeZone;
+  }
+
+  createDate(hour: number) {
+    const dateCopy = new Date(this.event.date);
+    dateCopy.setHours(hour);
+    return dateCopy;
   }
 
   async onLoad() {
@@ -51,19 +78,19 @@ export class SchedulesComponent implements OnInit {
     this.rooms = talksRooms(this.talks);
     this.speakers = talksSpeakers(this.talks);
     this.topics = topicsTalks(this.talks);
-    this.timeZone;
+    this.timeZone = this.createIntervalCollection(9, 13, 1);
   }
 
-  public getTalksByRoom(room: Talk['room']): Talk[] {
+  getTalksByRoom(room: Talk['room']): Talk[] {
     const talks = talksByRoom(room, this.talks);
     return talks.sort(
       (talkA, talkB) => Number(talkA.startDate) - Number(talkB.startDate)
     );
   }
 
-  public padTo2Digits = (num: number) => String(num).padStart(2, '0');
+  padTo2Digits = (num: number): string => String(num).padStart(2, '0');
 
-  public getHours(date: Date): string {
+  getHours(date: Date): string {
     return (
       this.padTo2Digits(date.getHours()) +
       ':' +
@@ -71,7 +98,7 @@ export class SchedulesComponent implements OnInit {
     );
   }
 
-  public getMonth(date: Date): string {
+  getMonth(date: Date): string {
     const monthNames = [
       'Enero',
       'Febrero',
@@ -94,13 +121,13 @@ export class SchedulesComponent implements OnInit {
     const option = event.target;
     if (option.value === 'todos') {
       this.filters = this.filters.filter(
-        (filter: any) => filter.name !== 'topic'
+        (filter: Filter) => filter.name !== 'topic'
       );
       this.changeTalksByFilters();
       return;
     }
     const index = this.filters.findIndex(
-      (filter: any) => filter.name === 'topic'
+      (filter: Filter) => filter.name === 'topic'
     );
     if (index === -1) {
       this.filters.push({ name: 'topic', value: option.value });
@@ -115,13 +142,13 @@ export class SchedulesComponent implements OnInit {
     const option = event.target;
     if (option.value === 'todos') {
       this.filters = this.filters.filter(
-        (filter: any) => filter.name !== 'speaker'
+        (filter: Filter) => filter.name !== 'speaker'
       );
       this.changeTalksByFilters();
       return;
     }
     const index = this.filters.findIndex(
-      (filter: any) => filter.name === 'speaker'
+      (filter: Filter) => filter.name === 'speaker'
     );
     if (index === -1) {
       this.filters.push({ name: 'speaker', value: option.value });
@@ -155,7 +182,7 @@ export class SchedulesComponent implements OnInit {
     return this.activeOtpionView === option;
   }
 
-  getTalk(zone: { startDate: number; duration: number }, room: Talk['room']) {
+  getTalk(zone: Interval, room: Talk['room']) {
     return (
       this.talks
         .filter((talk) => {
@@ -167,44 +194,96 @@ export class SchedulesComponent implements OnInit {
     );
   }
 
-  isTalkInInterval(zone: { startDate: number; duration: number }, talk: Talk) {
-    const endZoneDate = new Date(this.event.date.getDate());
-    endZoneDate.setHours(zone.startDate + zone.duration);
-    const startZoneDate = new Date(this.event.date.getDate());
-    startZoneDate.setHours(zone.startDate);
-
+  isTalkInInterval(zone: Interval, talk: Talk) {
     const { startDate, endDate } = talk;
 
-    const talkEndDecimalHours = endDate.getHours() + endDate.getMinutes() / 60;
-    const talkStartInHours = startDate.getHours() + startDate.getMinutes() / 60;
-    const zoneEndDecimalHours =
-      endZoneDate.getHours() + endZoneDate.getMinutes() / 60;
-    const zoneStartDecimalHours =
-      startZoneDate.getHours() + startZoneDate.getMinutes() / 60;
-
     return (
-      talkEndDecimalHours > zoneStartDecimalHours &&
-      talkStartInHours < zoneEndDecimalHours
+      Number(endDate) > Number(zone.startDate) &&
+      Number(startDate) < Number(zone.endDate)
     );
   }
 
-  getHeightTalk(zone: { startDate: number; duration: number }, talk: Talk) {
-    if (
-      talk.endDate.getHours() + talk.endDate.getMinutes() / 60 >
-      zone.startDate + zone.duration
-    ) {
-      return '100';
+  getDurationTalkInSlotInPercentage(zone: Interval, talk: Talk) {
+    const { startDate, endDate } = talk;
+
+    if (this.getIntervalTalkFromSlotComparison(zone, talk) === 'mayor') {
+      if (Number(startDate) === Number(zone.startDate)) {
+        return 100;
+      }
+      if (Number(startDate) < Number(zone.startDate)) {
+        if (endDate >= zone.endDate) {
+          return 100;
+        }
+        return this.getIntervalInHour(zone.startDate, endDate) * 100;
+      }
+
+      if (Number(startDate) > Number(zone.startDate)) {
+        return this.getIntervalInHour(startDate, zone.endDate) * 100;
+      }
     }
-    const startDate1 =
-      talk.startDate.getHours() + talk.startDate.getMinutes() / 60 >
-      zone.startDate
-        ? talk.startDate.getHours() + talk.startDate.getMinutes() / 60
-        : zone.startDate;
-    const duration =
-      talk.endDate.getHours() + talk.endDate.getMinutes() / 60 - startDate1;
 
-    const height = 100 * duration;
+    if (this.getIntervalTalkFromSlotComparison(zone, talk) === 'igual') {
+      if (Number(startDate) === Number(zone.startDate)) {
+        return 100;
+      }
+      if (Number(startDate) < Number(zone.startDate)) {
+        return this.getIntervalInHour(zone.startDate, endDate) * 100;
+      }
+      if (Number(startDate) > Number(zone.startDate)) {
+        return this.getIntervalInHour(startDate, zone.endDate) * 100;
+      }
+    }
 
-    return height.toString();
+    if (this.getIntervalTalkFromSlotComparison(zone, talk) === 'menor') {
+      return this.getIntervalInHour(startDate, endDate) * 100;
+    }
+    throw new Error('case not covered');
   }
+
+  getTopTranslationInPercentage(zone: Interval, talk: Talk) {
+    const { startDate } = talk;
+    const durationSlot = this.getIntervalInHour(zone.startDate, zone.endDate);
+
+    if (startDate.getTime() === zone.startDate.getTime()) {
+      return 0;
+    }
+    if (startDate.getTime() > zone.startDate.getTime()) {
+      const durationTalkInSlotInHour = this.getDurationTalkInSlotInHour(
+        zone,
+        talk
+      );
+      return (durationSlot - durationTalkInSlotInHour) * 100;
+    }
+    return 0;
+  }
+
+  getDurationTalkInSlotInHour = (zone: Interval, talk: Talk) => {
+    const { startDate } = talk;
+    const durationTalkInSlot = this.getIntervalInHour(startDate, zone.endDate);
+    return durationTalkInSlot;
+  };
+
+  getIntervalTalkFromSlotComparison = (zone: Interval, talk: Talk) => {
+    const { startDate, endDate } = talk;
+    const intervalSlot = this.getIntervalInHour(zone.startDate, zone.endDate);
+    const intervalTalk = this.getIntervalInHour(startDate, endDate);
+    if (intervalTalk > intervalSlot) {
+      return 'mayor';
+    }
+    if (intervalTalk < intervalSlot) {
+      return 'menor';
+    }
+    return 'igual';
+  };
+
+  getIntervalInHour = (dateStart: Date, dateEnd: Date) => {
+    const interval = this.milisecondsToHour(
+      dateEnd.getTime() - dateStart.getTime()
+    );
+    return interval;
+  };
+
+  milisecondsToHour = (value: number): number => {
+    return value / 1000 / 60 / 60;
+  };
 }

@@ -2,6 +2,7 @@
   text-align: center;
   margin-bottom: var(--space-xlarge);
 }
+
 .container {
   display: flex;
   flex-direction: column;
@@ -74,7 +75,6 @@
 table {
   width: 100%;
   border-collapse: collapse;
-
   border-spacing: 0px;
   border: 1px solid var(--primary-color);
 }
@@ -88,6 +88,7 @@ td.zone {
   background-color: #e0e0e0;
   padding: var(--space-small);
   text-align: center;
+  max-width: 80px;
 }
 
 th {
@@ -97,10 +98,9 @@ th {
 
 .talkColumn {
   border-bottom: 1px solid var(--primary-color);
+  border-top: 1px solid var(--primary-color);
   overflow: hidden;
-
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
 }
@@ -113,15 +113,16 @@ th {
 }
 
 .container_talkColumn {
-  height: 300px;
-}
-
-.talkColumn:first-child {
-  border-top: none;
+  height: 350px;
+  position: relative;
 }
 
 .height-100 {
   height: 100%;
+}
+
+.height-75 {
+  height: 75%;
 }
 
 .height-50 {
@@ -130,4 +131,22 @@ th {
 
 .height-25 {
   height: 25%;
+}
+
+.position-25 {
+  width: 100%;
+  position: absolute;
+  top: 25%;
+}
+
+.position-50 {
+  width: 100%;
+  position: absolute;
+  top: 50%;
+}
+
+.position-75 {
+  width: 100%;
+  position: absolute;
+  top: 75%;
 }
