@@ -1,29 +1,31 @@
-<header class="title">
-  <h1>Este año no te puedes perder...</h1>
-</header>
-<main class="container">
-  <section class="section-container">
-    <h2 class="subtitle">Proximos eventos</h2>
+<div class="viewport">
+  <header class="title">
+    <h1>Este año no te puedes perder...</h1>
+  </header>
+  <main class="container">
+    <section class="section-container">
+      <h2 class="subtitle">Proximos eventos</h2>
 
-    <ul>
-      <li *ngFor="let event of events">
-        <div class="single-event">
-          <div class="ico-calendar">
-            <p class="calendar">
-              <span>{{ event.date.getDate() }}</span>
-              <em>{{ this.getMonth(event.date) }}</em>
-            </p>
+      <ul>
+        <li *ngFor="let event of events">
+          <div class="single-event">
+            <div class="ico-calendar">
+              <p class="calendar">
+                <span>{{ event.date.getDate() }}</span>
+                <em>{{ this.getMonth(event.date) }}</em>
+              </p>
+            </div>
+            <div class="info">
+              <h3 class="info_title">
+                <a clas="info_link" [routerLink]="['/events', event.id]">
+                  <h2>{{ event.name }}</h2>
+                </a>
+              </h3>
+              <p clas="info_description">{{ event.description }}</p>
+            </div>
           </div>
-          <div class="info">
-            <h3 class="info_title">
-              <a clas="info_link" [routerLink]="['/events', event.id]">
-                <h2>{{ event.name }}</h2>
-              </a>
-            </h3>
-            <p clas="info_description">{{ event.description }}</p>
-          </div>
-        </div>
-      </li>
-    </ul>
-  </section>
-</main>
+        </li>
+      </ul>
+    </section>
+  </main>
+</div>

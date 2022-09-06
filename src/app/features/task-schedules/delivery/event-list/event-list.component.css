@@ -1,3 +1,7 @@
+.viewport {
+  height: 100vh;
+}
+
 .title {
   text-align: center;
   margin-bottom: var(--space-xlarge);
