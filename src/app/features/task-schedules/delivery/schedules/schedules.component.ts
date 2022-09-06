@@ -83,7 +83,7 @@ export class SchedulesComponent implements OnInit {
     this.tableRooms = talksRooms(this.talks);
     this.speakers = talksSpeakers(this.talks);
     this.topics = topicsTalks(this.talks);
-    this.timeZone = this.createIntervalCollection(9, 13, 0.5);
+    this.timeZone = this.createIntervalCollection(9, 13, 1);
   }
 
   getTalksByRoom(room: Talk['room']): Talk[] {
