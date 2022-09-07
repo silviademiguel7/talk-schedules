@@ -1,6 +1,6 @@
 import { Event } from './event';
 
-export const aEventBuilder = (...options: Partial<Event>[]) => {
+export const aEventBuilder = (...options: Partial<Event>[]): Event => {
   const eventDefault: Event = {
     id: 'irrelevantId',
     name: 'irrelevantName',
