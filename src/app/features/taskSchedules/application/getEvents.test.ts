@@ -1,4 +1,4 @@
-import { aEventBuilder } from '../domain/aEventBuilder';
+import { aEventBuilder } from '../domain/builders/aEventBuilder';
 import { repository } from '../domain/repository';
 import { getEvents } from './getEvents';
 

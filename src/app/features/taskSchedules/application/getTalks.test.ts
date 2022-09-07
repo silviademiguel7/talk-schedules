@@ -1,4 +1,4 @@
-import { aTalkBuilder } from '../domain/aTalkBuilder';
+import { aTalkBuilder } from '../domain/builders/aTalkBuilder';
 import { repository } from '../domain/repository';
 import { getTalks } from './getTalks';
 

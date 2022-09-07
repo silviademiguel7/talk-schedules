@@ -1,10 +1,14 @@
-import { aTalkBuilder, withSpeaker, withTopic } from '../domain/aTalkBuilder';
+import {
+  aTalkBuilder,
+  withSpeaker,
+  withTopic,
+} from '../domain/builders/aTalkBuilder';
 import { repository } from '../domain/repository';
-import { talkFilterService } from '../domain/talkFilterService';
+import { talkFilterService } from '../domain/services/talkFilterService';
 import { getTalksByFilters } from './getTalksByFilters';
 
 jest.mock('../domain/repository');
-jest.mock('../domain/talkFilterService');
+jest.mock('../domain/services/talkFilterService');
 
 describe('getTalksByFilters', () => {
   it('should return filtered', async () => {
@@ -13,7 +17,7 @@ describe('getTalksByFilters', () => {
       aTalkBuilder(withTopic('topic1')),
     ];
     jest.spyOn(repository, 'getTalks').mockResolvedValue(talks);
-    jest.spyOn(talkFilterService, 'filter').mockReturnValue(talks[0]);
+    jest.spyOn(talkFilterService, 'filter').mockReturnValue([talks[0]]);
 
     const filteredTalks = await getTalksByFilters('eventId', [
       { name: 'speaker', value: 'speaker1' },
@@ -23,6 +27,6 @@ describe('getTalksByFilters', () => {
       [{ name: 'speaker', value: 'speaker1' }],
       talks
     );
-    expect(filteredTalks).toEqual(talks[0]);
+    expect(filteredTalks).toEqual([talks[0]]);
   });
 });

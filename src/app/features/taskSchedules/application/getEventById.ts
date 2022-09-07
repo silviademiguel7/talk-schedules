@@ -1,6 +1,6 @@
 import { Event } from '../domain/event';
-import { eventFilterService } from '../domain/eventFilterService';
 import { repository } from '../domain/repository';
+import { eventFilterService } from '../domain/services/eventFilterService';
 
 export const getEventById = async (eventId: Event['id']): Promise<Event> => {
   const events = await repository.getEvents();

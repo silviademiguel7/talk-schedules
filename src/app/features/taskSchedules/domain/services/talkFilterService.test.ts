@@ -1,4 +1,4 @@
-import { aTalkBuilder, withSpeaker, withTopic } from './aTalkBuilder';
+import { aTalkBuilder, withSpeaker, withTopic } from '../builders/aTalkBuilder';
 import { talkFilterService } from './talkFilterService';
 
 describe('talkFilterService', () => {

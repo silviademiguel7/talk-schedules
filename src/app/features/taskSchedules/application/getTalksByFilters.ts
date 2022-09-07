@@ -1,6 +1,9 @@
 import { Event } from '../domain/event';
 import { repository } from '../domain/repository';
-import { Filter, talkFilterService } from '../domain/talkFilterService';
+import {
+  Filter,
+  talkFilterService,
+} from '../domain/services/talkFilterService';
 
 export const getTalksByFilters = async (
   eventId: Event['id'],

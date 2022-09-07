@@ -1,6 +1,6 @@
-import { Talk } from './talks';
+import { Talk } from '../talks';
 
-export const aTalkBuilder = (...options: Partial<Talk>[]) => {
+export const aTalkBuilder = (...options: Partial<Talk>[]): Talk => {
   const talkDefault: Talk = {
     id: 'irrelevantId',
     title: 'irrelevantTitle',

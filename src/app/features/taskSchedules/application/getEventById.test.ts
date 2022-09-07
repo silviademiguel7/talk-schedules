@@ -1,10 +1,10 @@
 import { getEventById } from './getEventById';
 import { repository } from '../domain/repository';
-import { aEventBuilder, withId } from '../domain/aEventBuilder';
-import { eventFilterService } from '../domain/eventFilterService';
+import { aEventBuilder, withId } from '../domain/builders/aEventBuilder';
+import { eventFilterService } from '../domain/services/eventFilterService';
 
 jest.mock('../domain/repository');
-jest.mock('../domain/eventFilterService');
+jest.mock('../domain/services/eventFilterService');
 
 describe('getEventById', () => {
   it('should be return an event with an specific id', async () => {

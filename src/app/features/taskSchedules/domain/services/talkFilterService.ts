@@ -1,4 +1,4 @@
-import { Talk } from './talks';
+import { Talk } from '../talks';
 
 export interface Filter {
   name: 'speaker' | 'topic';

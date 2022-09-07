@@ -1,4 +1,4 @@
-import { aEventBuilder, withId } from './aEventBuilder';
+import { aEventBuilder, withId } from '../builders/aEventBuilder';
 import { eventFilterService } from './eventFilterService';
 
 describe('eventFilterService', () => {

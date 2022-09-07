@@ -5,7 +5,7 @@ import { getEventById } from '../../application/getEventById';
 import { getTalks } from '../../application/getTalks';
 import { getTalksByFilters } from '../../application/getTalksByFilters';
 import { Event } from '../../domain/event';
-import { Filter } from '../../domain/talkFilterService';
+import { Filter } from '../../domain/services/talkFilterService';
 import {
   Talk,
   talksByRoom,
