@@ -3,8 +3,9 @@ import { ActivatedRoute } from '@angular/router';
 import { getEventById } from '../../application/getEventById';
 
 import { getTalks } from '../../application/getTalks';
-import { Filter, getTalksByFilters } from '../../application/getTalksByFilters';
+import { getTalksByFilters } from '../../application/getTalksByFilters';
 import { Event } from '../../domain/event';
+import { Filter } from '../../domain/talkFilterService';
 import {
   Talk,
   talksByRoom,
