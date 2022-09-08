@@ -4,7 +4,7 @@ import { getEventById } from '../../application/getEventById';
 
 import { getTalks } from '../../application/getTalks';
 import { getTalksByFilters } from '../../application/getTalksByFilters';
-import { Event } from '../../domain/event';
+import { Event as TalkEvent } from '../../domain/event';
 import { Filter } from '../../domain/services/talkFilterService';
 import {
   Talk,
@@ -28,7 +28,7 @@ interface Interval {
 })
 export class SchedulesComponent implements OnInit {
   public talks: Talk[] = [];
-  public event: Event = {} as Event;
+  public event: TalkEvent = {} as TalkEvent;
   public rooms: Talk['room'][] = [];
   public tableRooms: Talk['room'][] = [];
   public speakers: Talk['speaker'][] = [];
@@ -123,8 +123,8 @@ export class SchedulesComponent implements OnInit {
     return monthNames[date.getMonth()];
   }
 
-  async onChangeTopic(event: any): Promise<void> {
-    const option = event.target;
+  async onChangeTopic(event: Event): Promise<void> {
+    const option = event.target as HTMLSelectElement;
     if (option.value === 'todos') {
       this.filters = this.filters.filter(
         (filter: Filter) => filter.name !== 'topic'
@@ -144,8 +144,8 @@ export class SchedulesComponent implements OnInit {
     this.changeTalksByFilters();
   }
 
-  async onChangeSpeaker(event: any): Promise<void> {
-    const option = event.target;
+  async onChangeSpeaker(event: Event): Promise<void> {
+    const option = event.target as HTMLSelectElement;
     if (option.value === 'todos') {
       this.filters = this.filters.filter(
         (filter: Filter) => filter.name !== 'speaker'
@@ -179,9 +179,10 @@ export class SchedulesComponent implements OnInit {
     this.rooms = talksRooms(this.talks);
   }
 
-  onChangeViewOption(event: any) {
-    const option = event.target.id;
-    this.activeOtpionView = option;
+  onChangeViewOption(event: Event) {
+    const option = event.target as HTMLElement;
+
+    this.activeOtpionView = option.id === 'listMode' ? 'listMode' : 'tableMode';
   }
 
   isOptionViewActive(option: OptionView): boolean {
