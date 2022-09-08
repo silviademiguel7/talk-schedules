@@ -11,7 +11,7 @@ import {
   talksByRoom,
   talksRooms,
   talksSpeakers,
-  topicsTalks,
+  talksTopics,
 } from '../../domain/talks';
 
 type OptionView = 'listMode' | 'tableMode';
@@ -83,7 +83,7 @@ export class SchedulesComponent implements OnInit {
     this.rooms = talksRooms(this.talks);
     this.tableRooms = talksRooms(this.talks);
     this.speakers = talksSpeakers(this.talks);
-    this.topics = topicsTalks(this.talks);
+    this.topics = talksTopics(this.talks);
     this.timeZone = this.createIntervalCollection(9, 13, 1);
   }
 
